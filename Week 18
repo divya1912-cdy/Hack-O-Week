@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>File Explorer - Binary Tree</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter, Arial, sans-serif;
+  background:#f8fafc;
+  color:#111827;
+}
+
+.topbar{
+  height:60px;
+  background:#4f46e5;
+  color:white;
+  display:flex;
+  align-items:center;
+  padding:0 20px;
+  font-size:20px;
+  font-weight:600;
+}
+
+.wrapper{
+  display:flex;
+  height:calc(100vh - 60px);
+}
+
+.sidebar{
+  width:280px;
+  background:white;
+  border-right:1px solid #e5e7eb;
+  padding:20px;
+}
+
+.sidebar h4{
+  margin-bottom:10px;
+}
+
+.sidebar input, .sidebar select{
+  width:100%;
+  padding:10px;
+  margin-bottom:10px;
+  border:1px solid #d1d5db;
+  border-radius:6px;
+}
+
+.sidebar button{
+  width:100%;
+  padding:10px;
+  margin-bottom:8px;
+  border:none;
+  border-radius:6px;
+  background:#6366f1;
+  color:white;
+  cursor:pointer;
+}
+
+.sidebar button:hover{
+  background:#4f46e5;
+}
+
+.main{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+
+.tree-area{
+  flex:1;
+  padding:20px;
+  overflow:auto;
+}
+
+.node{
+  margin-left:20px;
+  padding:6px 10px;
+  border-left:2px solid #c7d2fe;
+}
+
+.node span{
+  display:inline-block;
+  padding:6px 10px;
+  background:#eef2ff;
+  border-radius:6px;
+}
+
+.output{
+  border-top:1px solid #e5e7eb;
+  padding:15px;
+  background:white;
+  font-weight:500;
+}
+
+</style>
+</head>
+<body>
+
+<div class="topbar">📁 File Explorer (Binary Tree)</div>
+
+<div class="wrapper">
+
+  <div class="sidebar">
+    <h4>Add Folder</h4>
+    <input id="name" placeholder="Folder name">
+    <select id="dir">
+      <option value="left">Insert Left</option>
+      <option value="right">Insert Right</option>
+    </select>
+    <button onclick="insertNode()">Insert Folder</button>
+
+    <h4>Traversal</h4>
+    <button onclick="runTraversal('pre')">Pre-Order</button>
+    <button onclick="runTraversal('in')">In-Order</button>
+    <button onclick="runTraversal('post')">Post-Order</button>
+  </div>
+
+  <div class="main">
+    <div class="tree-area" id="tree"></div>
+    <div class="output" id="output">Traversal result will appear here</div>
+  </div>
+
+</div>
+
+<script>
+class Node{
+  constructor(val){
+    this.val = val;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+let root = null;
+
+function insertNode(){
+  const val = document.getElementById("name").value.trim();
+  const dir = document.getElementById("dir").value;
+  if(!val) return;
+
+  const newNode = new Node(val);
+
+  if(root === null){
+    root = newNode;
+  } else {
+    let curr = root;
+    while(true){
+      if(dir === 'left'){
+        if(curr.left === null){ curr.left = newNode; break; }
+        curr = curr.left;
+      } else {
+        if(curr.right === null){ curr.right = newNode; break; }
+        curr = curr.right;
+      }
+    }
+  }
+
+  document.getElementById("name").value="";
+  renderTree();
+}
+
+function renderTree(){
+  const container = document.getElementById("tree");
+  container.innerHTML = "";
+
+  function draw(node, parent){
+    if(!node) return;
+
+    const div = document.createElement("div");
+    div.className = "node";
+
+    const label = document.createElement("span");
+    label.textContent = "📁 " + node.val;
+
+    div.appendChild(label);
+    parent.appendChild(div);
+
+    draw(node.left, div);
+    draw(node.right, div);
+  }
+
+  draw(root, container);
+}
+
+function runTraversal(type){
+  let res = [];
+
+  function pre(n){ if(!n) return; res.push(n.val); pre(n.left); pre(n.right);} 
+  function ino(n){ if(!n) return; ino(n.left); res.push(n.val); ino(n.right);} 
+  function post(n){ if(!n) return; post(n.left); post(n.right); res.push(n.val);} 
+
+  if(type==='pre') pre(root);
+  else if(type==='in') ino(root);
+  else post(root);
+
+  document.getElementById("output").innerText = type.toUpperCase() + " → " + res.join(" , ");
+}
+</script>
+
+</body>
+</html>
