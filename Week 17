@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ATM Queue (Circular Queue)</title>
+<style>
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:#efe6ff;
+}
+
+.header{
+  background:#b57edc;
+  color:white;
+  padding:15px;
+  text-align:center;
+  font-size:22px;
+  font-weight:bold;
+}
+
+.main{
+  display:flex;
+  height:calc(100vh - 60px);
+}
+
+.panel{
+  width:35%;
+  background:#d8b4f8;
+  padding:20px;
+  box-sizing:border-box;
+}
+
+.display{
+  width:65%;
+  padding:20px;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin-bottom:10px;
+  border:none;
+  border-radius:6px;
+}
+
+button{
+  width:100%;
+  padding:10px;
+  margin-top:8px;
+  border:none;
+  border-radius:6px;
+  background:#7b3fbf;
+  color:white;
+  cursor:pointer;
+  font-size:14px;
+}
+
+button:hover{
+  background:#5a2d82;
+}
+
+.queue{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.card{
+  background:#c8a2ff;
+  padding:15px;
+  border-radius:10px;
+  min-width:80px;
+  text-align:center;
+  font-weight:bold;
+}
+
+.status{
+  margin-top:20px;
+  font-weight:bold;
+  color:#5a2d82;
+}
+
+.index{
+  font-size:12px;
+  color:#333;
+}
+
+</style>
+</head>
+<body>
+
+<div class="header">🏦 ATM Circular Queue System</div>
+
+<div class="main">
+
+  <div class="panel">
+    <h3>Controls</h3>
+    <input id="name" placeholder="Enter customer name">
+    <button onclick="enqueue()">➕ Add Customer</button>
+    <button onclick="dequeue()">💸 Serve Customer</button>
+    <div class="status" id="status"></div>
+  </div>
+
+  <div class="display">
+    <h3>Queue Visualization</h3>
+    <div class="queue" id="queueDisplay"></div>
+  </div>
+
+</div>
+
+<script>
+const size = 6;
+let queue = new Array(size);
+let front = -1;
+let rear = -1;
+
+function isFull(){
+  return (front === 0 && rear === size-1) || (rear + 1) % size === front;
+}
+
+function isEmpty(){
+  return front === -1;
+}
+
+function enqueue(){
+  const name = document.getElementById("name").value.trim();
+  if(!name) return;
+
+  if(isFull()){
+    setStatus("🚫 Queue FULL (Peak Time)");
+    return;
+  }
+
+  if(front === -1) front = 0;
+  rear = (rear + 1) % size;
+  queue[rear] = name;
+
+  setStatus(name + " joined");
+  document.getElementById("name").value = "";
+  display();
+}
+
+function dequeue(){
+  if(isEmpty()){
+    setStatus("⚠️ Queue EMPTY");
+    return;
+  }
+
+  const served = queue[front];
+  queue[front] = null;
+
+  if(front === rear){
+    front = rear = -1;
+  } else {
+    front = (front + 1) % size;
+  }
+
+  setStatus(served + " served");
+  display();
+}
+
+function display(){
+  const box = document.getElementById("queueDisplay");
+  box.innerHTML = "";
+
+  if(isEmpty()){
+    box.innerHTML = "<p>No customers</p>";
+    return;
+  }
+
+  let i = front;
+  while(true){
+    const div = document.createElement("div");
+    div.className = "card";
+    div.innerHTML = queue[i] + `<div class='index'>idx: ${i}</div>`;
+    box.appendChild(div);
+
+    if(i === rear) break;
+    i = (i + 1) % size;
+  }
+}
+
+function setStatus(msg){
+  document.getElementById("status").innerText = msg;
+}
+</script>
+
+</body>
+</html>
