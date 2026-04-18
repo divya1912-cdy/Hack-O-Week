@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Playlist UI</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f8f4ff;
+        color: #4b3f72;
+        text-align: center;
+        padding: 20px;
+    }
+
+    h2 {
+        color: #6a5acd;
+    }
+
+    .container {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        width: 300px;
+        margin: auto;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    input {
+        width: 90%;
+        padding: 8px;
+        margin: 8px 0;
+        border: 1px solid #d6ccff;
+        border-radius: 6px;
+        outline: none;
+    }
+
+    button {
+        margin: 5px;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 6px;
+        background: #c8b6ff;
+        color: #3b2f5a;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #b19cd9;
+    }
+
+    #playlist {
+        margin-top: 15px;
+        padding: 10px;
+        background: #f1ecff;
+        border-radius: 6px;
+        min-height: 40px;
+    }
+</style>
+
+</head>
+
+<body>
+
+<h2>🎵 Playlist (Doubly Linked List)</h2>
+
+<div class="container">
+
+    <input type="text" placeholder="Enter song name">
+    
+    <div>
+        <button>Add to Front</button>
+        <button>Add to End</button>
+    </div>
+
+    <input type="number" placeholder="Delete position">
+    
+    <div>
+        <button>Delete</button>
+    </div>
+
+    <div>
+        <button>🔀 Shuffle (Reverse)</button>
+    </div>
+
+    <div id="playlist">
+        Playlist will appear here
+    </div>
+
+</div>
+
+</body>
+</html>
