@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Exam Score Tracker</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f5eee6; /* light cream */
+        color: #4b2e2e;
+        text-align: center;
+        padding: 20px;
+    }
+
+    h2 {
+        color: #6f4e37; /* coffee brown */
+    }
+
+    .container {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 12px;
+        width: 350px;
+        margin: auto;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    input {
+        width: 90%;
+        padding: 8px;
+        margin: 8px 0;
+        border: 1px solid #d2b48c;
+        border-radius: 6px;
+        outline: none;
+    }
+
+    button {
+        margin: 5px;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 6px;
+        background: #6f4e37; /* coffee */
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #5a3e2b;
+    }
+
+    .output-box {
+        margin-top: 15px;
+        padding: 10px;
+        background: #ede0d4; /* soft brown */
+        border-radius: 6px;
+        text-align: left;
+    }
+
+    p {
+        margin: 5px 0;
+    }
+</style>
+
+</head>
+
+<body>
+
+<h2>📊 Exam Score Tracker</h2>
+
+<div class="container">
+
+    <input type="number" placeholder="Enter score (0–100)">
+    
+    <div>
+        <button>Add Score</button>
+        <button>Reset</button>
+    </div>
+
+    <div class="output-box">
+        <p><b>Scores:</b> 75, 80, 90</p>
+        <p><b>Minimum:</b> --</p>
+        <p><b>Maximum:</b> --</p>
+        <p><b>Mode:</b> --</p>
+    </div>
+
+</div>
+
+</body>
+</html>
